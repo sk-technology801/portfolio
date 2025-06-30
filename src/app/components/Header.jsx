@@ -11,11 +11,11 @@ const PortfolioHeader = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -31,53 +31,66 @@ const PortfolioHeader = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 backdrop-blur-md transition-all duration-300 ${
-        isScrolled ? 'bg-white/70 shadow-lg' : 'bg-transparent'
+      className={`fixed w-full top-0 z-50 transition-all duration-300 border-b border-gray-800 ${
+        isScrolled ? 'bg-black/80 backdrop-blur-md shadow-md' : 'bg-black'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="group flex items-center">
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 text-transparent bg-clip-text transition-all duration-500 group-hover:brightness-110">
-            Saadi<span className="text-gray-900">.dev</span>
-          </h1>
+        <Link
+          href="/"
+          className="text-2xl font-extrabold tracking-wide text-white hover:text-gray-300 transition"
+        >
+          Saadi<span className="text-gray-500">.dev</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-10 text-md font-semibold">
+        <nav className="hidden md:flex space-x-8 font-medium text-white">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               href={link.path}
-              className={`relative text-gray-700 hover:text-blue-600 transition duration-300 after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 hover:after:w-full after:transition-all ${
-                pathname === link.path ? 'text-blue-600 after:w-full' : ''
-              }`}
+              className="group relative overflow-hidden"
             >
-              {link.name}
+              <span className="flex space-x-[1px]">
+                {link.name.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="inline-block transition-transform duration-300 ease-in-out group-hover:translate-y-1"
+                    style={{ transitionDelay: `${i * 30}ms` }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </span>
+              {pathname === link.path && (
+                <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-blue-500 rounded" />
+              )}
             </Link>
           ))}
         </nav>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-blue-700 text-xl focus:outline-none"
+          className="md:hidden text-white text-xl"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/90 backdrop-blur-lg shadow-lg border-t border-gray-200">
-          <div className="px-6 py-6 flex flex-col space-y-4">
+        <div className="md:hidden bg-black border-t border-gray-800">
+          <div className="px-6 py-6 flex flex-col space-y-4 text-white">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-lg font-semibold ${
-                  pathname === link.path ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+                className={`text-lg ${
+                  pathname === link.path ? 'text-blue-500' : 'hover:text-gray-300'
                 }`}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
               </Link>
