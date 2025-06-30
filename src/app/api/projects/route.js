@@ -1,6 +1,8 @@
-import { connectToDB } from '../../../../lib/mongodb';
-import Project from '../../../../models/Project';
-
+// import { connectToDB } from '../../../../lib/mongodb';
+// import Project from '../../../../models/Project';
+// inside any /api/[name]/route.js file
+import { connectToDB } from '../../../lib/mongodb';
+import Contact from '../../../models/Contact'; // or Project, etc.
 export async function GET() {
   try {
     await connectToDB();
