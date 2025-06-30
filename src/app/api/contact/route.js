@@ -1,9 +1,7 @@
-// import { connectToDB } from '../../../lib/mongodb';
-// import Contact from '../../../models/Contact';
-// inside any /api/[name]/route.js file
+// src/app/api/contact/route.js
 import { connectToDB } from '../../../lib/mongodb';
-import Contact from '../../../models/Contact'; // or Project, etc.
- 
+import Contact from '../../../models/Contact';
+
 export async function POST(req) {
   const body = await req.json();
   await connectToDB();
