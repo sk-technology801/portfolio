@@ -13,7 +13,23 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setForm({ name: '', email: '', message: '' });
+      } else {
+        alert('❌ Failed to send message.');
+      }
+    } catch (err) {
+      console.error('❌ Contact form error:', err);
+      alert('Something went wrong.');
+    }
   };
 
   return (
