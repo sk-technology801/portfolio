@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "build": "^0.1.4",
-    "framer-motion": "^12.20.1",
+    "framer-motion": "^12.23.12",
     "lucide-react": "^0.525.0",
     "mongoose": "^8.16.1",
     "next": "14.2.28",
